@@ -1,0 +1,39 @@
+{
+    "name": "wljs-plugin-template",
+    "version": "0.0.1",
+    "scripts": {
+        "build": "node --max-old-space-size=8192 ./node_modules/.bin/rollup --config rollup.config.mjs",
+        "restore": "git clone https://github.com/JerryI/wljs-plugin-template && mv wljs-plugin-template/.git .git && rm -rf wljs-plugin-template"
+    },
+    "description": "An example plugin for WLJS Notebook",
+    "wljs-meta": {
+        "frontend": [
+            "src/Frontend.wl"
+        ],
+        "kernel": [
+            "src/Kernel.wl"
+        ],
+        "js": "dist/kernel.js",
+        "priority": 5000,
+        "category": "Notebook Extensions",
+        "menu": [
+            {
+                "label": "Menu button",
+                "event": "youplugin-test-event",
+                "spawnWindow": false,
+                "type": "button"
+            }
+        ]
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/JerryI/wljs-plugin-template"
+    },
+    "dependencies": {
+        "@rollup/plugin-commonjs": "^25.0.4",
+        "@rollup/plugin-json": "^6.0.0",
+        "@rollup/plugin-node-resolve": "^15.2.1",
+        "@rollup/plugin-terser": "^0.4.4",
+        "rollup": "^3.21.6"
+    }
+}
