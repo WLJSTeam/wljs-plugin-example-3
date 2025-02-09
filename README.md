@@ -1,24 +1,24 @@
-# WLJS Notebook Plugin Template
+# WLJS Notebook Plugin Example 3
+*Adds a new cell type with `.m` extension, which implements Wolfram Language input with InputForm in the output*
 
-A boilerplate for writting various plugins/extensions for WLJS Notebook
+![](./example.png)
 
-Clone it to `<AppData>/wljs_packages/` folder and restart an app
+It cover the basics of
 
-## Commands
+- basics of writting your own evaluator
+- loading packages to the evaluation kernel
+- syntax checking and error handling at cells processing
 
-To bundle Javascript
+## How to install
+1. Clone this repository to `<AppData>/wljs_packages` or paste github url to the settings menu
+2. Restart WLJS App
 
-```bash
-npm i
-npm run build
+
+## Example
+Try to evaluate
+
+```mathematica
+.m
+
+Red
 ```
-
-To restore `.git` 
-
-```bash
-npm run restore
-```
-
-## Examples
-- [Integrating external JS library with Wolfram Kernel](https://github.com/JerryI/wljs-plugin-example-1)
-- [Creating Evaluate All button and working with cells](https://github.com/JerryI/wljs-plugin-example-2)
