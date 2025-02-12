@@ -12,9 +12,12 @@ Begin["`Private`"]
 
 Q[t_Transaction] := StringMatchQ[t["Data"], ".m\n"~~___]
 
-rootFolder = $InputFileName // DirectoryName // ParentDirectory;
 
-evaluator  = StandardEvaluator`StandardEvaluator["Name" -> "Basic InputForm Evaluator", "InitKernel" -> init, "Pattern" -> (_?Q), "Priority"->(2)];
+
+evaluator  = StandardEvaluator`StandardEvaluator["Name" -> "Basic InputForm Evaluator", "Pattern" -> (_?Q), "Priority"->(2)];
+
+rootFolder = $InputFileName // DirectoryName // ParentDirectory;
+preload = Import[FileNameJoin[{rootFolder, "src", "Preload.wl"}], "Text"];
 
 StandardEvaluator`ReadyQ[evaluator, k_] := (
     If[! TrueQ[k["ReadyQ"] ] || ! TrueQ[k["ContainerReadyQ"] ],
@@ -22,6 +25,15 @@ StandardEvaluator`ReadyQ[evaluator, k_] := (
         Print[evaluator, "Kernel is not ready"];
         False
     ,
+
+        Print[evaluator, "Preload"];
+
+        With[{preload = preload},
+            GenericKernel`Init[k, 
+                ImportString[preload, "WL"]
+            , "Once"->True];
+        ];
+
         True
     ]
 );
@@ -42,11 +54,6 @@ StandardEvaluator`EvaluateTransaction[evaluator, k_, t_] := Module[{list},
             Return[$Failed];
         ];
 
-        If[! TrueQ[k["ReadyQ"] ],
-            Echo[k["ReadyQ"] ];
-            EventFire[t, "Error", "Kernel is not ready"];
-            Return[$Failed];
-        ];
 
         list = SplitExpression[t["Data"] ];
         
@@ -86,18 +93,8 @@ StandardEvaluator`EvaluateTransaction[evaluator, k_, t_] := Module[{list},
 ];  
 
 
-init[k_] := With[{
-    preload = Import[FileNameJoin[{rootFolder, "src", "Preload.wl"}], "Text"]
-},
-    Print[evaluator, "Preload"];
 
-    GenericKernel`Init[k, 
-        ImportString[preload, "WL"];
-    ];
-]
-
-
-SplitExpression[astr_] := With[{str = StringReplace[astr, {"$Pi$"->"\[Pi]"}]},
+SplitExpression[str_] := With[{},
   Select[Select[(StringTake[str, Partition[Join[{1}, #, {StringLength[str]}], 2]] &@
    Flatten[{#1 - 1, #2 + 1} & @@@ 
      Sort@
