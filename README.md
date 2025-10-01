@@ -10,8 +10,9 @@ It cover the basics of
 - syntax checking and error handling at cells processing
 
 ## How to install
-1. Clone this repository to `<AppData>/wljs_packages` or paste github url to the settings menu
-2. Restart WLJS App
+1. Clone this repository to `<Documents>/WLJS Notebooks/Extensions`
+2. Make sure that the folder name matches `wljs-plugin-example-3`
+3. Restart WLJS App
 
 
 ## Example
