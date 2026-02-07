@@ -1,7 +1,7 @@
 BeginPackage["CoffeeLiqueur`Extensions`BasicEval`", {
     "CoffeeLiqueur`Notebook`Transactions`",
-    "JerryI`Misc`Events`",
-    "JerryI`Misc`Events`Promise`",
+    "CoffeeLiqueur`Misc`Events`",
+    "CoffeeLiqueur`Misc`Events`Promise`",
     "CodeParser`"
 }]
 
