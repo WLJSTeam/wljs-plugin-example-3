@@ -17,7 +17,7 @@ Q[t_Transaction] := StringMatchQ[t["Data"], ".m\n"~~___]
 evaluator  = StandardEvaluator`StandardEvaluator["Name" -> "Basic InputForm Evaluator", "Pattern" -> (_?Q), "Priority"->(2)];
 
 rootFolder = $InputFileName // DirectoryName // ParentDirectory;
-preload = Import[FileNameJoin[{rootFolder, "src", "Preload.wl"}], "Text"];
+preload = FileNameJoin[{rootFolder, "src", "Preload.wl"}];
 
 StandardEvaluator`ReadyQ[evaluator, k_] := (
     If[! TrueQ[k["ReadyQ"] ] || ! TrueQ[k["ContainerReadyQ"] ],
@@ -29,8 +29,8 @@ StandardEvaluator`ReadyQ[evaluator, k_] := (
         Print[evaluator, "Preload"];
 
         With[{preload = preload},
-            GenericKernel`Init[k, 
-                ImportString[preload, "WL"]
+            GenericKernel`Send[k, 
+                Get[preload];
             , "Once"->True];
         ];
 
